@@ -196,7 +196,7 @@ public class EthernetConnectionClient extends AbstractConnectionClient
      */
     @Override
     public void send(String tsplMessage) {
-        send(tsplMessage.getBytes(US_ASCII));
+        send(tsplMessage.getBytes(charset));
     }
 
     /**
@@ -253,7 +253,7 @@ public class EthernetConnectionClient extends AbstractConnectionClient
                     byte[] data = new byte[readDataBuffer.limit()];
                     readDataBuffer.get(data);
 
-                    notifyMessageReceived(new String(data, US_ASCII));
+                    notifyMessageReceived(new String(data, charset));
                     readDataBuffer.clear();
                 }
             }
