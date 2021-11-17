@@ -29,6 +29,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.nio.charset;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 import static org.fintrace.core.drivers.tspl.DriverConstants.CR_BYTES;
@@ -59,6 +60,7 @@ public class EthernetConnectionClient extends AbstractConnectionClient
     private ExecutorService connectionExecutorService = Executors.newSingleThreadExecutor();
     private SocketChannel channel;
     private Selector selector;
+    private Charset charset = US_ASCII;
 
     // The buffer into which we'll read data when it's available
     private ByteBuffer readBuffer = ByteBuffer.allocate(8192);
@@ -128,6 +130,19 @@ public class EthernetConnectionClient extends AbstractConnectionClient
     public EthernetConnectionClient(String host, int port) {
         this.host = host;
         this.port = port;
+    }
+    
+        /**
+     * Constructor
+     *
+     * @param host    The zebra printer host address or IP address.
+     * @param port    The port number on zebra printer that will accept the
+     *                connection.
+     * @param charset The charset to use for sending the data to the printer.
+     */
+    public EthernetConnectionClient(String host, int port, Charset charset) {
+        this(host, port);
+        this.charset = charset;
     }
 
     /**
